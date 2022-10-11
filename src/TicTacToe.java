@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 public class TicTacToe extends JComponent {
     public static final int FIELD_EMPTY = 0;
@@ -23,6 +24,63 @@ public class TicTacToe extends JComponent {
         }
         isXturn = true;
     }
+    void botsMove(){
+        final int max = 9;
+        final int min = 1;
+        boolean isOK = true;
+        while(isOK) {
+            int rand = (int) (Math.random() * (max - min + 1) + min);
+            switch (rand) {
+                case 1:
+                    if (field[0][0] == FIELD_EMPTY) {
+                        field[0][0] = FIELD_0;
+                        isOK = false;
+                        break;
+                    }case 2:
+                    if (field[0][1] == FIELD_EMPTY) {
+                        field[0][1] = FIELD_0;
+                        isOK = false;
+                        break;
+                    }case 3:
+                    if (field[0][2] == FIELD_EMPTY) {
+                        field[0][2] = FIELD_0;
+                        isOK = false;
+                        break;
+                    }case 4:
+                    if (field[1][0] == FIELD_EMPTY) {
+                        field[1][0] = FIELD_0;
+                        isOK = false;
+                        break;
+                    }case 5:
+                    if (field[1][1] == FIELD_EMPTY) {
+                        field[1][1] = FIELD_0;
+                        isOK = false;
+                        break;
+                    }case 6:
+                    if (field[1][2] == FIELD_EMPTY) {
+                        field[1][2] = FIELD_0;
+                        isOK = false;
+                        break;
+                    }case 7:
+                    if (field[2][0] == FIELD_EMPTY) {
+                        field[2][0] = FIELD_0;
+                        isOK = false;
+                        break;
+                    }case 8:
+                    if (field[2][1] == FIELD_EMPTY) {
+                        field[2][1] = FIELD_0;
+                        isOK = false;
+                        break;
+                    }case 9:
+                    if (field[2][2] == FIELD_EMPTY) {
+                        field[2][2] = FIELD_0;
+                        isOK = false;
+                        break;
+                    }
+            }
+        }
+        check();
+    }
 
     @Override
     protected void processMouseEvent(MouseEvent mouseEvent) {
@@ -38,23 +96,25 @@ public class TicTacToe extends JComponent {
                 //проверяем чей ход, если Х - ставим крестик, если 0 - ставим нолик
                 if (isXturn) {
                     field[i][j] = FIELD_X;
-                } else
-                    field[i][j] = FIELD_0;
-                isXturn = !isXturn; //меняем флаг хода.
-                repaint(); // перерисовка компонента, это вызоыкт метод paintCompanent();
-                int res = checkState();
-                if (res != 0) {
-                    if (res == FIELD_0 * 3) {
-                        JOptionPane.showMessageDialog(this, "Zerous win", "Win", JOptionPane.INFORMATION_MESSAGE);
-                    } else if (res == FIELD_X * 3) {
-                        JOptionPane.showMessageDialog(this, "X win", "Win", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "draw", "draw", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    initGame();
-                    repaint();
                 }
+                check();
+                botsMove();
             }
+        }
+    }
+    void check(){
+        repaint(); // перерисовка компонента, это вызоыкт метод paintCompanent();
+        int res = checkState();
+        if (res != 0) {
+            if (res == FIELD_0 * 3) {
+                JOptionPane.showMessageDialog(this, "Zerous win", "Win", JOptionPane.INFORMATION_MESSAGE);
+            } else if (res == FIELD_X * 3) {
+                JOptionPane.showMessageDialog(this, "X win", "Win", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "draw", "draw", JOptionPane.INFORMATION_MESSAGE);
+            }
+            initGame();
+            repaint();
         }
     }
 
